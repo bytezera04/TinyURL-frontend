@@ -5,7 +5,13 @@ export default function Footer() {
             <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                 {/* Branding */}
                 <div className="flex flex-col gap-2">
-                    <h2 className="text-2xl font-heading font-bold">TinyURL</h2>
+                    <div className="flex items-center gap-2">
+                        <img
+                            src="/logo.png"
+                            className="w-8 h-8"
+                        />
+                        <h2 className="text-2xl font-heading font-bold">TinyURL</h2>
+                    </div>
                     <p className="text-muted-light dark:text-muted-dark text-sm max-w-xs">
                         Create short, memorable links in seconds. Fully responsive and works in dark or light mode.
                     </p>
@@ -13,13 +19,19 @@ export default function Footer() {
 
                 {/* Social Icons */}
                 <div className="flex gap-4">
-                    <a href="#" aria-label="Twitter" className="hover:text-accent transition-colors">
+                    <a href="/404" aria-label="Twitter" className="hover:text-accent transition-colors">
                         <i className="bi bi-twitter text-xl"></i>
                     </a>
-                    <a href="#" aria-label="GitHub" className="hover:text-accent transition-colors">
+                    <a
+                        href="https://github.com/bytezera04?tab=repositories"
+                        aria-label="GitHub"
+                        className="hover:text-accent transition-colors"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         <i className="bi bi-github text-xl"></i>
                     </a>
-                    <a href="#" aria-label="LinkedIn" className="hover:text-accent transition-colors">
+                    <a href="/404" aria-label="LinkedIn" className="hover:text-accent transition-colors">
                         <i className="bi bi-linkedin text-xl"></i>
                     </a>
                 </div>
