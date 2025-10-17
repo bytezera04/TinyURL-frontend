@@ -1,5 +1,6 @@
 "use client";
 
+import { API_BASE_URL } from "@/app/config";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -13,7 +14,7 @@ export default function RedirectPage({ params } : Props) {
     useEffect(() => {
         const fetchOriginal = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/urls/${params.short_id}`);
+                const res = await fetch(`${API_BASE_URL}/urls/${params.short_id}`);
 
                 if (res.status === 404) {
                     router.push("/404");
