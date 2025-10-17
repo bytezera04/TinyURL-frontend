@@ -44,7 +44,7 @@ export default function HomePage() {
         try {
             const res = await shortenURL(input);
 
-            setShortened(`${window.location.origin}/${res.short}`);
+            setShortened(`${window.location.origin}/r/${res.short}`);
         }
         catch (err: any) {
             setError("Failed to shorten URL. Please try again.");
