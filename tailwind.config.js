@@ -1,76 +1,52 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-    darkMode: "class",
+const config = {
+    darkMode: "class", // enable toggling dark mode with 'class'
     content: [
+        "./app/**/*.{ts,tsx}",
         "./pages/**/*.{ts,tsx}",
         "./components/**/*.{ts,tsx}",
-        "./app/**/*.{ts,tsx}",
-        "./src/**/*.{ts,tsx}",
+        "./src/**/*.{ts,tsx}"
     ],
     theme: {
-        container: {
-            center: true,
-            padding: "2rem",
-            screens: {
-                "2xl": "1400px",
-            },
-        },
         extend: {
+            fontFamily: {
+                heading: ['Poppins', 'sans-serif'],
+                body: ['Inter', 'sans-serif'],
+                ui: ['JetBrains Mono', 'monospace']
+            },
             colors: {
-            border: "hsl(var(--border))",
-            input: "hsl(var(--input))",
-            ring: "hsl(var(--ring))",
-            background: "hsl(var(--background))",
-            foreground: "hsl(var(--foreground))",
-            primary: {
-                DEFAULT: "hsl(var(--primary))",
-                foreground: "hsl(var(--primary-foreground))",
+                accent: {
+                    DEFAULT: "#3B82F6",  // blue accent
+                    foreground: "#ffffff"
+                },
+                background: {
+                    light: "#ffffff",
+                    dark: "#101010"  // dark gray background for dark mode
+                },
+                foreground: {
+                    light: "#111827",  // dark text for light mode
+                    dark: "#f5f5f5"    // light text for dark mode
+                },
+                muted: {
+                    light: "#6B7280",
+                    dark: "#9CA3AF"
+                },
+                card: {
+                    light: "#ffffff",
+                    dark: "#2c2c2c"  // slightly lighter than background for card distinction
+                },
+                border: {
+                    light: "#e5e7eb",
+                    dark: "#3a3a3a"
+                }
             },
-            secondary: {
-                DEFAULT: "hsl(var(--secondary))",
-                foreground: "hsl(var(--secondary-foreground))",
-            },
-            destructive: {
-                DEFAULT: "hsl(var(--destructive))",
-                foreground: "hsl(var(--destructive-foreground))",
-            },
-            muted: {
-                DEFAULT: "hsl(var(--muted))",
-                foreground: "hsl(var(--muted-foreground))",
-            },
-            accent: {
-                DEFAULT: "hsl(var(--accent))",
-                foreground: "hsl(var(--accent-foreground))",
-            },
-            popover: {
-                DEFAULT: "hsl(var(--popover))",
-                foreground: "hsl(var(--popover-foreground))",
-            },
-            card: {
-                DEFAULT: "hsl(var(--card))",
-                foreground: "hsl(var(--card-foreground))",
-            },
-            },
-            borderRadius: {
-                lg: "var(--radius)",
-                md: "calc(var(--radius) - 2px)",
-                sm: "calc(var(--radius) - 4px)",
-            },
-            keyframes: {
-            "accordion-down": {
-                from: { height: "0" },
-                to: { height: "var(--radix-accordion-content-height)" },
-            },
-            "accordion-up": {
-                from: { height: "var(--radix-accordion-content-height)" },
-                to: { height: "0" },
-            },
-            },
-            animation: {
-                "accordion-down": "accordion-down 0.2s ease-out",
-                "accordion-up": "accordion-up 0.2s ease-out",
-            },
-        },
+            backgroundImage: {
+                'gradient-light': 'linear-gradient(135deg, #ffffff, #f9f9f9)',
+                'gradient-dark': 'linear-gradient(135deg, #2c2c2c, #1f1f1f)'
+            }
+        }
     },
-    plugins: [require("tailwindcss-animate")],
-}
+    plugins: [require("tailwindcss-animate")]
+};
+
+module.exports = config;

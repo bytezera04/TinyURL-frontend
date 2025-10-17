@@ -3,3 +3,69 @@
 @tailwind utilities;
 
 @import "bootstrap-icons/font/bootstrap-icons.css";
+
+/* Fonts */
+
+body {
+    @apply font-body;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+}
+
+input, button, select, textarea {
+    @apply font-ui;
+}
+
+/* CSS Styles */
+
+body {
+    @apply bg-background-light text-foreground-light;
+}
+
+.dark body {
+    @apply font-body bg-background-dark text-foreground-dark;
+}
+
+.btn-accent {
+    @apply bg-accent text-accent-foreground px-4 py-2 rounded-lg hover:brightness-90 transition;
+}
+
+input, textarea {
+    @apply border border-border-light dark:border-border-dark
+           bg-card-light dark:bg-card-dark
+           text-foreground-light dark:text-foreground-dark
+           rounded-md p-3
+           focus:outline-none focus:ring-2 focus:ring-accent
+           transition-colors;
+}
+
+/* Cards */
+
+.card {
+    @apply rounded-lg shadow-md p-6 bg-gradient-light dark:bg-gradient-dark border border-border-light dark:border-border-dark transform transition-transform duration-200 hover:scale-105 cursor-pointer select-none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.2s;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0,0,0,0.05) 0%, transparent 60%);
+}
+
+.card.hovered::before {
+    opacity: 1;
+}
+
+.dark .card::before {
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.15) 0%, transparent 60%);
+}
