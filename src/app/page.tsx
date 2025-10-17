@@ -42,6 +42,8 @@ export default function HomePage() {
         setError(null);
 
         try {
+            // Submit request
+
             const res = await fetch(`${API_BASE_URL}/urls/`, {
                 method: "POST",
                 headers: {
@@ -52,16 +54,28 @@ export default function HomePage() {
                 }),
             });
 
+            // Clear input
+
+            setInput("");
+
+            // Check for errors
+
+            if (res.status === 429) {
+                throw new Error("Too many requests, try again shortly.");
+            }
+
             if (!res.ok) {
                 throw new Error("Failed to create URL");
             }
 
+            // Load the short URL
+            
             const urlRes = await res.json();
 
             setShortened(`${window.location.origin}/r/${urlRes.short}`);
         }
         catch (err: any) {
-            setError("Failed to shorten URL. Please try again.");
+            setError(err.message);
         }
         finally {
             setLoading(false);
