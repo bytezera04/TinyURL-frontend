@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Navbar() {
@@ -38,22 +39,36 @@ export default function Navbar() {
         }
     };
 
+    // Active link
+    const pathname = usePathname();
+
+    const links = [
+        { href: "/", label: "Home" },
+        { href: "/about", label: "About" },
+    ];
+
     return (
         <header className="border-b border-border-light dark:border-border-dark bg-gradient-light dark:bg-gradient-dark text-foreground-light dark:text-foreground-dark shadow-md z-50">
             <nav className="container mx-auto flex items-center justify-between p-4">
-                <Link href="/" className="flex gap-2 text-2xl font-bold hover:brightness-90">
-                    <div className="flex items-center gap-2">
-                        <img
-                            src="/logo.png"
-                            className="w-8 h-8"
-                        />
-                        <h2 className="text-2xl font-heading font-bold">TinyURL</h2>
-                    </div>
+                <Link href="/" className="flex gap-2 items-center hover:brightness-90">
+                    <img src="/logo.png" alt="TinyURL Logo" className="w-8 h-8" />
+                    <h2 className="text-2xl font-heading font-bold">TinyURL</h2>
                 </Link>
 
                 <div className="flex items-center gap-6">
-                    <Link href="/" className="hover:text-accent transition">Home</Link>
-                    <Link href="/about" className="hover:text-accent transition">About</Link>
+                    {links.map((link) => (
+                        <Link
+                            key={link.href}
+                            href={link.href}
+                            className={`transition ${
+                                pathname === link.href
+                                    ? "text-accent font-semibold border-b-2 border-accent"
+                                    : "hover:text-accent"
+                            }`}
+                        >
+                            {link.label}
+                        </Link>
+                    ))}
 
                     <button
                         onClick={toggleDarkMode}
