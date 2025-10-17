@@ -3,8 +3,10 @@
 import Card from "@/components/Card";
 import { ShortenedLink } from "@/components/ShortenedLink";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { API_BASE_URL } from "./config";
+import { URLDto } from "@/types/url";
+import URLCard from "@/components/URLCard";
 
 const cards = [
     {
@@ -84,7 +86,7 @@ export default function HomePage() {
 
     return (
         <div className="flex justify-center">
-            <div className="flex flex-col max-w-6xl min-h-screen mt-12 px-4 py-16 items-center text-foreground-light dark:text-foreground-dark">
+            <div className="flex flex-col max-w-6xl min-w-[0px] min-h-screen mt-12 px-4 py-16 items-center text-foreground-light dark:text-foreground-dark">
                 {/* Hero Section */}
                 <motion.section
                     initial={{ opacity: 0, y: 20 }}
@@ -145,7 +147,90 @@ export default function HomePage() {
                         </motion.div>
                     ))}
                 </section>
+
+                <TopURLsSection />
             </div>
         </div>
+    );
+}
+
+function TopURLsSection() {
+    const [topUrls, setTopUrls] = useState<URLDto[]>([]);
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchTopUrls = async() => {
+            try {
+                const queryParams = new URLSearchParams({
+                    limit: "10"
+                });
+
+                const res = await fetch(`${API_BASE_URL}/urls/top?${queryParams.toString()}`);
+
+                // Check for errors
+
+                if (res.status === 429) {
+                    throw new Error("Too many requests. Please try again later.");
+                }
+
+                if (!res.ok) {
+                    throw new Error("Failed to fetch top URLs");
+                }
+
+                // Get URLs
+
+                const data: URLDto[] = await res.json();
+
+                if (data.length === 0) {
+                    setError("No top URLs found yet.");
+                } else {
+                    setTopUrls(data);
+                }
+            }
+            catch (err: any) {
+                console.error(err.message);
+                setError(err.message);
+            }
+            finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTopUrls();
+    }, []);
+
+    return (
+        <section className="mt-24 w-full mx-auto">
+            <h2 className="text-2xl font-bold text-foreground-light dark:text-foreground-dark mb-6">
+                Most Clicked URLs
+            </h2>
+            
+            {loading ? (
+                <div className="flex items-center justify-center py-12">
+                    <p className="text-muted-light dark:text-muted-dark animate-pulse">Loading top URLs...</p>
+                </div>
+            ) : error ? (
+                <p className="text-muted-light dark:text-muted-dark text-center py-6">{error}</p>
+            ) : (
+                <div className="block space-y-4">
+                    {topUrls.map((url, index) => (
+                        <motion.div
+                            key={url.short}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{
+                                delay: 0.1 * index,
+                                duration: 0.5,
+                                type: "spring",
+                                stiffness: 100,
+                            }}
+                        >
+                            <URLCard url={url} />
+                        </motion.div>
+                    ))}
+                </div>
+            )}
+        </section>
     );
 }
