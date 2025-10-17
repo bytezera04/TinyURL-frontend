@@ -52,9 +52,6 @@ export default function URLCard({ url } : { url: URLDto }) {
                         {`${window.location.origin}/r/${url.short}`}
                     </a>
                 </div>
-                <span className="text-sm font-medium text-green-500 flex items-center gap-1">
-                    <i className="bi bi-bar-chart-line-fill"></i> {url.clicks}
-                </span>
             </div>
 
             {/* Original URL */}
@@ -72,18 +69,25 @@ export default function URLCard({ url } : { url: URLDto }) {
             </div>
 
             {/* Dates */}
-            <div className="text-sm text-muted-light dark:text-muted-dark space-y-1 relative z-10">
+            <div className="text-sm space-y-1 relative z-10">
+                <p className="flex items-center gap-1">
+                    <i className="bi bi-bar-chart-fill text-green-500"></i>
+                    Clicks:{" "}
+                    <span className="font-medium text-muted-light dark:text-muted-dark">
+                        {url.clicks}
+                    </span>
+                </p>
                 <p className="flex items-center gap-1">
                     <i className="bi bi-calendar3 text-accent"></i>
-                    Created{" "}
-                    <span className="font-medium text-foreground-light dark:text-foreground-dark">
+                    Created:{" "}
+                    <span className="font-medium text-muted-light dark:text-muted-dark">
                         {formatDate(url.created_at)}
                     </span>
                 </p>
                 <p className="flex items-center gap-1">
                     <i className="bi bi-clock-history text-accent"></i>
-                    Last clicked{" "}
-                    <span className="font-medium text-foreground-light dark:text-foreground-dark">
+                    Last clicked:{" "}
+                    <span className="font-medium text-muted-light dark:text-muted-dark">
                         {formatDate(url.last_clicked_at)}
                     </span>
                 </p>
