@@ -1,34 +1,58 @@
 "use client";
 
 import Card from "@/components/Card";
+import { ShortenedLink } from "@/components/ShortenedLink";
+import { shortenURL } from "@/lib/api";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
-export default function HomePage() {
-    const [url, setUrl] = useState("");
+const cards = [
+    {
+        title: "Easy To Use",
+        description: "Shorten your links in seconds with a clean, intuitive interface. No setup required.",
+        icon: "bi bi-lightning-charge"
+    },
+    {
+        title: "Fast & Reliable",
+        description: "Links are shortened and redirected instantly, ensuring maximum uptime and performance.",
+        icon: "bi bi-speedometer2"
+    },
+    {
+        title: "Secure",
+        description: "All links are protected and private. Your data is safe with modern encryption standards.",
+        icon: "bi bi-shield-lock"
+    },
+    {
+        title: "Customizable",
+        description: "Create memorable short links with custom aliases for personal or business use.",
+        icon: "bi bi-palette"
+    }
+];
 
-    const cards = [
-        {
-            title: "Easy To Use",
-            description: "Shorten your links in seconds with a clean, intuitive interface. No setup required.",
-            icon: "bi bi-lightning-charge"
-        },
-        {
-            title: "Fast & Reliable",
-            description: "Links are shortened and redirected instantly, ensuring maximum uptime and performance.",
-            icon: "bi bi-speedometer2"
-        },
-        {
-            title: "Secure",
-            description: "All links are protected and private. Your data is safe with modern encryption standards.",
-            icon: "bi bi-shield-lock"
-        },
-        {
-            title: "Customizable",
-            description: "Create memorable short links with custom aliases for personal or business use.",
-            icon: "bi bi-palette"
+export default function HomePage() {
+    const [input, setInput] = useState("");
+    const [shortened, setShortened] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        setLoading(true);
+        setError(null);
+
+        try {
+            const res = await shortenURL(input);
+
+            setShortened(`${window.location.origin}/${res.short}`);
         }
-    ];
+        catch (err: any) {
+            setError("Failed to shorten URL. Please try again.");
+        }
+        finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="flex justify-center">
@@ -38,7 +62,7 @@ export default function HomePage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="text-center mb-16"
+                    className="min-h-[400px] text-center mb-16"
                 >
                     <h1 className="text-5xl font-bold mb-4">
                         TinyURL — Simplify Your Links
@@ -47,24 +71,37 @@ export default function HomePage() {
                         Shorten, share, and manage your URLs effortlessly. Fast, reliable, and completely free.
                     </p>
 
-                    {/* URL input */}
-                    <motion.div
+                    <motion.form
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3, duration: 0.4 }}
-                        className="flex flex-col sm:flex-row gap-4 justify-center"
+                        onSubmit={handleSubmit}
+                        className="flex flex-col sm:flex-row gap-4 w-full"
                     >
                         <input
-                            type="text"
-                            value={url}
-                            onChange={(e) => setUrl(e.target.value)}
-                            placeholder="Enter your long URL here"
-                            className="flex-grow"
+                            type="url"
+                            required
+                            placeholder="Enter your long URL"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            className="flex-1 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-md p-3 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-accent"
                         />
-                        <button className="btn-accent">
-                            Shorten
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="px-6 py-3 bg-accent text-white font-medium rounded-md hover:brightness-90 transition disabled:opacity-50"
+                        >
+                            {loading ? "Shortening..." : "Shorten"}
                         </button>
-                    </motion.div>
+                    </motion.form>
+
+                    {/* Error */}
+                    {error && <p className="text-red-500 mt-4">{error}</p>}
+
+                    {/* Shortened Link */}
+                    {shortened && (
+                        <ShortenedLink shortened={shortened} />
+                    )}
                 </motion.section>
 
                 {/* Cards Section */}

@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const config = {
-    darkMode: "class", // enable toggling dark mode with 'class'
+    darkMode: "class",
     content: [
         "./app/**/*.{ts,tsx}",
         "./pages/**/*.{ts,tsx}",
@@ -16,16 +16,16 @@ const config = {
             },
             colors: {
                 accent: {
-                    DEFAULT: "#3B82F6",  // blue accent
+                    DEFAULT: "#3B82F6",
                     foreground: "#ffffff"
                 },
                 background: {
                     light: "#ffffff",
-                    dark: "#101010"  // dark gray background for dark mode
+                    dark: "#101010"
                 },
                 foreground: {
-                    light: "#111827",  // dark text for light mode
-                    dark: "#f5f5f5"    // light text for dark mode
+                    light: "#111827",
+                    dark: "#f5f5f5"
                 },
                 muted: {
                     light: "#6B7280",
@@ -33,7 +33,7 @@ const config = {
                 },
                 card: {
                     light: "#ffffff",
-                    dark: "#2c2c2c"  // slightly lighter than background for card distinction
+                    dark: "#2c2c2c"
                 },
                 border: {
                     light: "#e5e7eb",
