@@ -1,6 +1,7 @@
-"use client";
+
 
 import { URLDto } from "@/types/url";
+import { formatDate } from "@/utils/formatDate";
 import { useState } from "react";
 
 export default function URLCard({ url } : { url: URLDto }) {
@@ -16,7 +17,7 @@ export default function URLCard({ url } : { url: URLDto }) {
 
     return (
         <div
-            className={`card relative w-full max-w-full p-6 rounded-2xl border border-border-light dark:border-border-dark shadow-md transition-shadow duration-300 cursor-pointer overflow-hidden ${
+            className={`relative w-full max-w-full p-6 rounded-xl bg-gradient-light dark:bg-gradient-dark border border-border-light dark:border-border-dark shadow-md transition-shadow duration-300 cursor-pointer overflow-hidden ${
                 hovered ? "hover:shadow-xl" : ""
             }`}
             onMouseMove={handleMouseMove}
@@ -27,12 +28,12 @@ export default function URLCard({ url } : { url: URLDto }) {
                 "--mouse-y": coords.y,
             } as React.CSSProperties}
         >
-            {/* Hover radial effect */}
+            {/* Hover effect overlay */}
             {hovered && (
                 <div
-                    className="absolute inset-0 pointer-events-none transition-opacity duration-300"
+                    className="absolute inset-0 pointer-events-none transition-opacity duration-300 rounded-2xl"
                     style={{
-                        background: `radial-gradient(circle at ${coords.x} ${coords.y}, rgba(255,255,255,0.1), transparent 70%)`,
+                        background: `radial-gradient(circle at ${coords.x} ${coords.y}, rgba(255,255,255,0.12), transparent 70%)`,
                     }}
                 ></div>
             )}
@@ -40,10 +41,16 @@ export default function URLCard({ url } : { url: URLDto }) {
             {/* Header */}
             <div className="flex justify-between items-center mb-3 relative z-10">
                 <div className="flex items-center gap-2">
-                    <i className="bi bi-link-45deg text-accent text-xl"></i>
-                    <h3 className="text-lg font-semibold text-foreground-light dark:text-foreground-dark truncate max-w-[200px]">
-                        Original URL
-                    </h3>
+                    <i className="bi bi-box-arrow-up-right text-accent text-xl"></i>
+                    <a
+                        href={`${window.location.origin}/r/${url.short}`}
+                        title={`${window.location.origin}/r/${url.short}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-lg font-semibold text-accent truncate hover:underline"
+                    >
+                        {`${window.location.origin}/r/${url.short}`}
+                    </a>
                 </div>
                 <span className="text-sm font-medium text-green-500 flex items-center gap-1">
                     <i className="bi bi-bar-chart-line-fill"></i> {url.clicks}
@@ -51,28 +58,35 @@ export default function URLCard({ url } : { url: URLDto }) {
             </div>
 
             {/* Original URL */}
-            <a
-                href={url.original}
-                title={url.original}
-                target="_blank"
-                rel="noreferrer"
-                className="link text-accent block truncate mb-3 relative z-10"
-            >
-                {url.original}
-            </a>
-
-            {/* Short URL */}
-            <div className="flex items-center gap-2 relative z-10">
-                <i className="bi bi-box-arrow-up-right text-muted-light dark:text-muted-dark"></i>
+            <div className="mb-4 relative z-10">
+                <p className="text-sm font-medium text-muted-light dark:text-muted-dark mb-1">Destination</p>
                 <a
-                    href={`${window.location.origin}/r/${url.short}`}
-                    title={`${window.location.origin}/r/${url.short}`}
+                    href={url.original}
+                    title={url.original}
                     target="_blank"
                     rel="noreferrer"
-                    className="link truncate text-accent font-medium"
+                    className="link truncate block"
                 >
-                    {`${window.location.origin}/r/${url.short}`}
+                    {url.original}
                 </a>
+            </div>
+
+            {/* Dates */}
+            <div className="text-sm text-muted-light dark:text-muted-dark space-y-1 relative z-10">
+                <p className="flex items-center gap-1">
+                    <i className="bi bi-calendar3 text-accent"></i>
+                    Created{" "}
+                    <span className="font-medium text-foreground-light dark:text-foreground-dark">
+                        {formatDate(url.created_at)}
+                    </span>
+                </p>
+                <p className="flex items-center gap-1">
+                    <i className="bi bi-clock-history text-accent"></i>
+                    Last clicked{" "}
+                    <span className="font-medium text-foreground-light dark:text-foreground-dark">
+                        {formatDate(url.last_clicked_at)}
+                    </span>
+                </p>
             </div>
         </div>
     );
