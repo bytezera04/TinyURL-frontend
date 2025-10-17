@@ -41,8 +41,14 @@ export default function Navbar() {
     return (
         <header className="border-b border-border-light dark:border-border-dark bg-gradient-light dark:bg-gradient-dark text-foreground-light dark:text-foreground-dark shadow-md z-50">
             <nav className="container mx-auto flex items-center justify-between p-4">
-                <Link href="/" className="text-2xl font-bold text-accent hover:brightness-90">
-                    TinyURL
+                <Link href="/" className="flex gap-2 text-2xl font-bold hover:brightness-90">
+                    <div className="flex items-center gap-2">
+                        <img
+                            src="/logo.png"
+                            className="w-8 h-8"
+                        />
+                        <h2 className="text-2xl font-heading font-bold">TinyURL</h2>
+                    </div>
                 </Link>
 
                 <div className="flex items-center gap-6">
