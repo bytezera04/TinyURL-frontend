@@ -8,6 +8,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <head>
                 <title>TinyURL</title>
 
+                {/* Favicon */}
+                <link rel="icon" href="/logo.png" type="image/png" />
+
                 {/* Google Fonts */}
                 <link
                     rel="stylesheet"
