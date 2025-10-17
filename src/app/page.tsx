@@ -2,9 +2,9 @@
 
 import Card from "@/components/Card";
 import { ShortenedLink } from "@/components/ShortenedLink";
-import { shortenURL } from "@/lib/api";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { API_BASE_URL } from "./config";
 
 const cards = [
     {
@@ -42,9 +42,23 @@ export default function HomePage() {
         setError(null);
 
         try {
-            const res = await shortenURL(input);
+            const res = await fetch(`${API_BASE_URL}/urls/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "original": input
+                }),
+            });
 
-            setShortened(`${window.location.origin}/r/${res.short}`);
+            if (!res.ok) {
+                throw new Error("Failed to create URL");
+            }
+
+            const urlRes = await res.json();
+
+            setShortened(`${window.location.origin}/r/${urlRes.short}`);
         }
         catch (err: any) {
             setError("Failed to shorten URL. Please try again.");
