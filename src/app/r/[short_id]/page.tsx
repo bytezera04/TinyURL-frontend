@@ -2,7 +2,7 @@
 
 import { API_BASE_URL } from "@/app/config";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
     params: { short_id: string };
@@ -11,8 +11,12 @@ interface Props {
 export default function RedirectPage({ params } : Props) {
     const router = useRouter();
     const [error, setError] = useState<string | null>(null);
+    const hasFetched = useRef(false);
 
     useEffect(() => {
+        if (hasFetched.current) return;
+        hasFetched.current = true;
+
         const fetchOriginal = async () => {
             try {
                 const res = await fetch(`${API_BASE_URL}/urls/${params.short_id}`);
