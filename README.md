@@ -7,7 +7,7 @@ TinyURL Frontend is a modern, responsive web app that allows users to create and
 - 📊 View statistics for the most clicked URLs
 - 📱 Fully responsive and modern UI
 - ⚡ Built with **Next.js**, **React**, and **Tailwind CSS**
-- 🐧 Deployed on **Linux**
+- 🐧 Deployed on **Linux** (Was originally deployed on **Vercel**)
 
 ## 🌐 Backend
 This frontend communicates with the TinyURL Backend API: [TinyURL Backend](https://github.com/bytezera04/TinyURL-backend)
