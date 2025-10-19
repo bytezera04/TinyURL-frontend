@@ -9,8 +9,11 @@ TinyURL Frontend is a modern, responsive web app that allows users to create and
 - ⚡ Built with **Next.js**, **React**, and **Tailwind CSS**
 - 🐧 Deployed on **Linux** (Was originally deployed on **Vercel**)
 
-## 🌐 Backend
+## 🖥️ Backend
 This frontend communicates with the TinyURL Backend API: [TinyURL Backend](https://github.com/bytezera04/TinyURL-backend)
+
+## 🌐 Demo
+Check out the live demo: [TinyURL Demo](https://tinyurldemo.dev/)
 
 ## 🛠️ Tech Stack
 - **Next.js** – React framework for server-side rendering
