@@ -2,7 +2,7 @@
 
 TinyURL Frontend is a modern, responsive web app that allows users to create and manage shortened URLs through the TinyURL Backend API.
 
-[Screenshot](/docs/screenshot.png)
+![Screenshot](/docs/screenshot.png)
 
 ## ✨ Features
 - 🔗 Create shortened URLs
